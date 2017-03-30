@@ -1,54 +1,144 @@
-## Project: Build a Traffic Sign Recognition Program
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
-
-Overview
+# **Traffic Sign Recognition**
 ---
-In this project, you will use what you've learned about deep neural networks and convolutional neural networks to classify traffic signs. You will train and validate a model so it can classify traffic sign images using the [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset). After the model is trained, you will then try out your model on images of German traffic signs that you find on the web.
 
-We have included an Ipython notebook that contains further instructions 
-and starter code. Be sure to download the [Ipython notebook](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb). 
+**Build a Traffic Sign Recognition Project**
 
-We also want you to create a detailed writeup of the project. Check out the [writeup template](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/writeup_template.md) for this project and use it as a starting point for creating your own writeup. The writeup can be either a markdown file or a pdf document.
-
-To meet specifications, the project will require submitting three files: 
-* the Ipython notebook with the code
-* the code exported as an html file
-* a writeup report either as a markdown or pdf file 
-
-Creating a Great Writeup
----
-A great writeup should include the [rubric points](https://review.udacity.com/#!/rubrics/481/view) as well as your description of how you addressed each point.  You should include a detailed description of the code used in each step (with line-number references and code snippets where necessary), and links to other supporting documents or external references.  You should include images in your writeup to demonstrate how your code works with examples.  
-
-All that said, please be concise!  We're not looking for you to write a book here, just a brief description of how you passed each rubric point, and references to the relevant code :). 
-
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup.
-
-The Project
----
 The goals / steps of this project are the following:
-* Load the data set
+* Load the data set (see below for links to the project data set)
 * Explore, summarize and visualize the data set
 * Design, train and test a model architecture
 * Use the model to make predictions on new images
 * Analyze the softmax probabilities of the new images
 * Summarize the results with a written report
 
-### Dependencies
-This lab requires:
 
-* [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit)
+[//]: # (Image References)
 
-The lab enviroment can be created with CarND Term1 Starter Kit. Click [here](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) for the details.
+[image1]: ./examples/visualization.jpg "Visualization"
+[image2]: ./examples/grayscale.jpg "Grayscaling"
+[graph]: ./examples/graph.png
+[loss]: ./examples/loss.png
+[accuracy]: ./examples/accuracy2.png
+[image4]: ./examples/2.jpg
+[image5]: ./examples/14.jpg
+[image6]: ./examples/17.jpg
+[image7]: ./examples/25.jpg
+[image8]: ./examples/35.jpg
 
-### Dataset and Repository
+## Rubric Points
+### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
-1. Download the data set. The classroom has a link to the data set in the "Project Instructions" content. This is a pickled dataset in which we've already resized the images to 32x32. It contains a training, validation and test set.
-2. Clone the project, which contains the Ipython notebook and the writeup template.
-```sh
-git clone https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project
-cd CarND-Traffic-Sign-Classifier-Project
-jupyter notebook Traffic_Sign_Classifier.ipynb
-```
+---
 
-### Requirements for Submission
-Follow the instructions in the `Traffic_Sign_Classifier.ipynb` notebook and write the project report using the writeup template as a guide, `writeup_template.md`. Submit the project code and writeup document.
+### Data Set Summary & Exploration
+
+#### 1. Provide a basic summary of the data set and identify where in your code the summary was done. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
+
+The code for this step is contained in the second code cell of the IPython notebook.  
+
+I used the pandas library to calculate summary statistics of the traffic
+signs data set:
+
+* The size of training set is 34799
+* The size of test set is 12630
+* The shape of a traffic sign image is 32x32x3
+* The number of unique classes/labels in the data set is 43
+
+#### 2. Include an exploratory visualization of the dataset and identify where the code is in your code file.
+
+The code for this step is contained in the fourth code cell of the IPython notebook.  
+
+Here is an exploratory visualization of the data set. It is a bar chart showing how the data
+
+### Design and Test a Model Architecture
+
+#### 1. Describe how, and identify where in your code, you preprocessed the image data. What tecniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc.
+
+The code for this step is contained in the fourth code cell of the IPython notebook.
+
+As a first step, I decided to convert the images to grayscale. Here is an example of a traffic sign image before and after grayscaling.
+
+![alt text][image2]
+
+As a last step, I normalized the image data because gradient descent works better when the data is normalized.
+
+#### 2. Describe how, and identify where in your code, you set up training, validation and testing data. How much data was in each set? Explain what techniques were used to split the data into these sets.
+
+* The size of training set is 34799
+* The size of validation set is 4410
+* The size of test set is 12630
+
+
+#### 3. Describe, and identify where in your code, what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
+
+The code for my final model is located in the seventh cell of the ipython notebook.
+
+I wrote a class for my neural network model and it could also be found under nnet.py file. The reason is I prefer to run code from command line instead of ipython notebook. You need to reset the tensorflow graph every time you test your code, which is pretty annoying.
+
+My final model consisted of the following layers:
+
+![alt text][graph]
+
+
+| Layer         		|     Description	        					|
+|:---------------------:|:---------------------------------------------:|
+| Input         		| 32x32x1 grayscale image   							|
+| Convolution 5x5     	| 1x1 stride, same padding, outputs 32x32x32	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 16x16x32 				|
+| Convolution 5x5     	| 1x1 stride, same padding, outputs 16x16x64	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 8x8x64 				|
+| Fully connected		| outputs 1024        									|
+| Fully connected		| outputs 43        									|
+| Softmax				| Cross Entropy        									|
+
+
+
+#### 4. Describe how, and identify where in your code, you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+
+The code for training the model is located in the eigth cell of the ipython notebook. The code could also be found under main.py, which is the file I used to run my model.
+
+
+#### 5. Describe the approach taken for finding a solution. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+
+I evaluate my model using the validation set after each epoch and test it out after all 10 epochs. Seem like my model suffers from overfitting and I should probably decrease my dropout probability. It performs almost the same on validation and test data set.
+
+My final model results were:
+* training set accuracy almost equal to 1.
+* validation set accuracy of 93.8.
+* test set accuracy of 93.3.
+
+![alt text][loss]
+
+![alt text][accuracy]
+
+
+### Test a Model on New Images
+
+#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+
+Here are five German traffic signs that I found on the web:
+
+![alt text][image4] ![alt text][image5] ![alt text][image6]
+![alt text][image7] ![alt text][image8]
+
+
+#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. Identify where in your code predictions were made. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+
+The code for making predictions on my final model is located in the tenth cell of the Ipython notebook.
+
+Here are the results of the prediction:
+
+| Image			        |     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+| Speed limit (50km/h)      		| Speed limit (50km/h)   									|
+| Stop     			| Stop 										|
+| No entry					| No entry											|
+| Road work	      		| Road work					 				|
+| Ahead only			| Ahead only      							|
+
+
+The results turned out to be impossibly true and it reaches 100%. Definitely we can't trust this result since it is a very small sample set.  
+
+Actually I trained two models, one with RGB images and the other one with grayscale. It seems like the grayscale one outperforms the RGB one on the five test images.

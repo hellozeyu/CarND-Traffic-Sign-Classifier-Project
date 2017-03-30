@@ -1,0 +1,2 @@
+model_checkpoint_path: "/src/CarND/CarND-Traffic-Sign-Classifier-Project/runs/1490575550/checkpoints/model-5440"
+all_model_checkpoint_paths: "/src/CarND/CarND-Traffic-Sign-Classifier-Project/runs/1490575550/checkpoints/model-5440"
