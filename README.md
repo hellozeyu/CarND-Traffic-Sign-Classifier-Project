@@ -46,15 +46,13 @@ signs data set:
 
 #### 2. Include an exploratory visualization of the dataset and identify where the code is in your code file.
 
-The code for this step is contained in the fourth code cell of the IPython notebook.  
-
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data
+The code for this step is contained in the fourth code cell of the IPython notebook.ß
 
 ### Design and Test a Model Architecture
 
 #### 1. Describe how, and identify where in your code, you preprocessed the image data. What tecniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc.
 
-The code for this step is contained in the fourth code cell of the IPython notebook.
+The code for this step is contained in the fifth code cell of the IPython notebook. Also I save all those functions in utils.py file since I prefer running model using bash.
 
 As a first step, I decided to convert the images to grayscale. Here is an example of a traffic sign image before and after grayscaling.
 
@@ -77,8 +75,6 @@ I wrote a class for my neural network model and it could also be found under nne
 
 My final model consisted of the following layers:
 
-![alt text][graph]
-
 
 | Layer         		|     Description	        					|
 |:---------------------:|:---------------------------------------------:|
@@ -94,15 +90,18 @@ My final model consisted of the following layers:
 | Softmax				| Cross Entropy        									|
 
 
+Here is a screenshot I took from Tensorboard.
+
+![alt text][graph]
 
 #### 4. Describe how, and identify where in your code, you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-The code for training the model is located in the eigth cell of the ipython notebook. The code could also be found under main.py, which is the file I used to run my model.
+The code for training the model is located in the eighth cell of the ipython notebook. The code could also be found under main.py, which is the file I used to run my model.
 
 
 #### 5. Describe the approach taken for finding a solution. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
-I evaluate my model using the validation set after each epoch and test it out after all 10 epochs. Seem like my model suffers from overfitting and I should probably decrease my dropout probability. It performs almost the same on validation and test data set.
+I evaluate my model using the validation set after each epoch and test it out after all 10 epochs. Seem like my model suffers from overfitting and I should probably decrease my dropout probability. It performs almost the same on validation and test data set. I also save my model, including training and testing summaries under `runs/` folder so I can easily reload the graph and evaluate using test images.
 
 My final model results were:
 * training set accuracy almost equal to 1.
@@ -139,6 +138,6 @@ Here are the results of the prediction:
 | Ahead only			| Ahead only      							|
 
 
-The results turned out to be impossibly true and it reaches 100%. Definitely we can't trust this result since it is a very small sample set.  
+The results turned out to be impossibly well and it reaches 100%. Definitely we can't trust this result since it is a very small sample set.  
 
 Actually I trained two models, one with RGB images and the other one with grayscale. It seems like the grayscale one outperforms the RGB one on the five test images.
